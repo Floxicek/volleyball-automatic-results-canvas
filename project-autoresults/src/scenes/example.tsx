@@ -1,12 +1,22 @@
-import {Circle, makeScene2D} from '@motion-canvas/2d';
-import {createRef} from '@motion-canvas/core';
+import { makeScene2D, Txt } from "@motion-canvas/2d";
+import { createRef } from "@motion-canvas/core";
+
+async function getDataFromServer(sheetID: string, range: string) {
+  const response = await fetch(
+    `http://localhost:3000/api/sheet-data?sheetID=${sheetID}&range=${range}`
+  );
+  const data = await response.json();
+  return data;
+}
 
 export default makeScene2D(function* (view) {
-  // Create your animations here
+  const spreadsheetId = ""; // Replace with your actual spreadsheet ID
+  const range = ""; // Replace with your actual range
 
-  const circle = createRef<Circle>();
+  const loadingText = createRef<Txt>();
+  view.add(<Txt text="Loading data from Google Sheets..." ref={loadingText} />);
 
-  view.add(<Circle ref={circle} size={320} fill={'lightseagreen'} />);
+  const data = yield getDataFromServer(spreadsheetId, range);
 
-  yield* circle().scale(2, 2).to(1, 2);
+  yield loadingText().text(data[0]);
 });
