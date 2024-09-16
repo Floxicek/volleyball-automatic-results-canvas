@@ -1,7 +1,7 @@
-import {makeProject} from '@motion-canvas/core';
+import { makeProject } from "@motion-canvas/core";
 
-import example from './scenes/example?scene';
+import resultBoard from "./scenes/result-board?scene";
 
 export default makeProject({
-  scenes: [example],
+  scenes: [resultBoard],
 });
